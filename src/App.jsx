@@ -3,7 +3,7 @@ import { Canvas, useFrame, useLoader } from '@react-three/fiber'
 import { Float, Sparkles, Stars, Environment, ContactShadows } from '@react-three/drei'
 import * as THREE from 'three'
 import gsap from 'gsap'
-import { Heart, Music2, VolumeX, Play, Pause, Sparkles as SparkleIcon, Gift, X, ChevronDown } from 'lucide-react'
+import { Heart, Music2, VolumeX, Play, Pause, Sparkles as SparkleIcon, Gift, X, ChevronDown, ArrowLeft, ArrowRight } from 'lucide-react'
 import RoseWidget from './RoseWidget'
 
 // ✨ Cá nhân hóa website tại đây
@@ -19,6 +19,9 @@ Ngày 20/10, anh mong em luôn được yêu thương, được là chính mình
 Chúc vợ yêu của anh một ngày 20/10 thật rực rỡ. Anh yêu em, hôm nay và cả những ngày sau nữa. ❤️`
 
 const MEMORIES = [
+  { date: 'MỘT NGÀY ĐÁNG NHỚ', title: 'Khoảnh khắc của chúng mình', src: 'https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=900&q=85', note: 'Thay ảnh này bằng kỷ niệm thật của hai đứa nhé.' },
+  { date: 'NHỮNG ĐIỀU BÌNH DỊ', title: 'Chỉ cần có em', src: 'https://images.unsplash.com/photo-1511988617509-a57c8a288659?auto=format&fit=crop&w=900&q=85', note: 'Những điều giản dị lại là điều anh trân trọng nhất.' },
+  { date: 'VẪN LÀ EM', title: 'Người anh chọn', src: 'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=900&q=85', note: 'Nếu được chọn lại, anh vẫn muốn gặp em.' },
   { date: 'MỘT NGÀY ĐÁNG NHỚ', title: 'Khoảnh khắc của chúng mình', src: 'https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=900&q=85', note: 'Thay ảnh này bằng kỷ niệm thật của hai đứa nhé.' },
   { date: 'NHỮNG ĐIỀU BÌNH DỊ', title: 'Chỉ cần có em', src: 'https://images.unsplash.com/photo-1511988617509-a57c8a288659?auto=format&fit=crop&w=900&q=85', note: 'Những điều giản dị lại là điều anh trân trọng nhất.' },
   { date: 'VẪN LÀ EM', title: 'Người anh chọn', src: 'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=900&q=85', note: 'Nếu được chọn lại, anh vẫn muốn gặp em.' },
@@ -273,9 +276,11 @@ export default function App() {
   const [letterOpen, setLetterOpen] = useState(false)
   const [giftOpen, setGiftOpen] = useState(false)
   const [selected, setSelected] = useState(null)
+  const [activeMemory, setActiveMemory] = useState(0)
   const [burst, setBurst] = useState(false)
   const heroRef = useRef(null)
   const letterRef = useRef(null)
+  const memoryTouchStart = useRef(null)
 
   useEffect(() => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
@@ -298,6 +303,15 @@ export default function App() {
     setLetterOpen(true)
     window.setTimeout(() => letterRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' }), 80)
   }
+  const moveMemory = (direction) => {
+    setActiveMemory((current) => (current + direction + MEMORIES.length) % MEMORIES.length)
+  }
+  const finishMemorySwipe = (event) => {
+    if (memoryTouchStart.current === null) return
+    const distance = event.changedTouches[0].clientX - memoryTouchStart.current
+    if (Math.abs(distance) > 45) moveMemory(distance < 0 ? 1 : -1)
+    memoryTouchStart.current = null
+  }
 
   return (
     <main>
@@ -316,9 +330,11 @@ export default function App() {
 
       <section className="hero" id="home" ref={heroRef}>
         <div className="hero-content">
-          <div className="hero-kicker"><span className="tiny-star">✦</span> A LITTLE UNIVERSE, JUST FOR YOU <span className="tiny-star">✦</span></div>
-          <h1 className="hero-title">Gửi <span>vũ trụ</span><br />của riêng anh.</h1>
-          <p className="hero-subtitle">Giữa hàng tỷ vì sao, anh vẫn luôn tìm về phía em.</p>
+          <div className="hero-copy">
+            <div className="hero-kicker"><span className="tiny-star">✦</span> A LITTLE UNIVERSE, JUST FOR YOU <span className="tiny-star">✦</span></div>
+            <h1 className="hero-title">Gửi <span>vũ trụ</span><br />của riêng anh.</h1>
+            <p className="hero-subtitle">Giữa hàng tỷ vì sao, anh vẫn luôn tìm về phía em.</p>
+          </div>
           <div className="hero-actions">
             <button className="primary-button" onClick={beginJourney}><Heart size={17} fill="currentColor" /> Bắt đầu hành trình <span>↗</span></button>
             <span className="date-note">20 THÁNG 10 <i>·</i> DÀNH RIÊNG CHO EM</span>
@@ -342,11 +358,52 @@ export default function App() {
 
       <section className="memories section-wrap" id="memories">
         <div className="memories-heading"><div><span className="eyebrow">THE CONSTELLATION OF US</span><h2>Những điều nhỏ bé<br /><em>mà anh luôn nhớ.</em></h2></div><p>Chạm vào từng tấm ảnh để mở một kỷ niệm. Hãy thay bằng ảnh thật của hai đứa để món quà trở nên đặc biệt hơn.</p></div>
-        <div className="memory-grid">
-          {MEMORIES.map((item, i) => <button className={`memory-card memory-${i + 1}`} key={item.title} onClick={() => setSelected(item)}>
-            <img src={item.src} alt={item.title} loading="lazy" />
-            <span className="memory-shade" /><span className="memory-number">0{i + 1}</span><span className="memory-caption"><small>{item.date}</small><strong>{item.title}</strong><span className="memory-open">Mở kỷ niệm ↗</span></span>
-          </button>)}
+        <div className="memory-carousel">
+          <div
+            className="memory-stage"
+            role="region"
+            aria-label="Những kỷ niệm của chúng mình"
+            tabIndex={0}
+            onTouchStart={(event) => { memoryTouchStart.current = event.touches[0].clientX }}
+            onTouchEnd={finishMemorySwipe}
+            onKeyDown={(event) => {
+              if (event.key === 'ArrowLeft') moveMemory(-1)
+              if (event.key === 'ArrowRight') moveMemory(1)
+            }}
+          >
+            {MEMORIES.map((item, index) => {
+              const forwardOffset = (index - activeMemory + MEMORIES.length) % MEMORIES.length
+              const offset = forwardOffset > MEMORIES.length / 2 ? forwardOffset - MEMORIES.length : forwardOffset
+              const position = offset === 0 ? 'is-active' : offset === -1 ? 'is-previous' : offset === 1 ? 'is-next' : 'is-hidden'
+              const isActive = position === 'is-active'
+              const hiddenTransform = offset < 0
+                ? `translateX(calc(-50% - ${Math.abs(offset) * 110}%)) scale(.82)`
+                : `translateX(calc(-50% + ${offset * 110}%)) scale(.82)`
+              return <button
+                className={`memory-card memory-slide ${position}`}
+                key={index}
+                onClick={() => isActive ? setSelected(item) : setActiveMemory(index)}
+                aria-label={isActive ? `Mở kỷ niệm: ${item.title}` : `Chuyển tới kỷ niệm: ${item.title}`}
+                aria-hidden={position === 'is-hidden'}
+                tabIndex={position === 'is-hidden' ? -1 : 0}
+                style={position === 'is-hidden' ? { transform: hiddenTransform } : undefined}
+              >
+                <img src={item.src} alt={item.title} loading="lazy" />
+                <span className="memory-shade" />
+                <span className="memory-number">{String(index + 1).padStart(2, '0')} <i>/ {String(MEMORIES.length).padStart(2, '0')}</i></span>
+                <span className="memory-caption"><small>{item.date}</small><strong>{item.title}</strong><span className="memory-open">{isActive ? 'Mở kỷ niệm ↗' : 'Xem tiếp →'}</span></span>
+              </button>
+            })}
+          </div>
+          <div className="memory-controls">
+            <button className="memory-nav" onClick={() => moveMemory(-1)} aria-label="Kỷ niệm trước"><ArrowLeft size={18} /></button>
+            <div className="memory-pagination" aria-live="polite">
+              <span>{String(activeMemory + 1).padStart(2, '0')}</span>
+              <div className="memory-progress"><span style={{ width: `${((activeMemory + 1) / MEMORIES.length) * 100}%` }} /></div>
+              <span>{String(MEMORIES.length).padStart(2, '0')}</span>
+            </div>
+            <button className="memory-nav" onClick={() => moveMemory(1)} aria-label="Kỷ niệm tiếp theo"><ArrowRight size={18} /></button>
+          </div>
         </div>
       </section>
 
