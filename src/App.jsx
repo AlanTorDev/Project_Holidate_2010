@@ -19,12 +19,17 @@ Ngày 20/10, anh mong em luôn được yêu thương, được là chính mình
 Chúc vợ yêu của anh một ngày 20/10 thật rực rỡ. Anh yêu em, hôm nay và cả những ngày sau nữa. ❤️`
 
 const MEMORIES = [
-  { date: 'MỘT NGÀY ĐÁNG NHỚ', title: 'Khoảnh khắc của chúng mình', src: 'https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=900&q=85', note: 'Thay ảnh này bằng kỷ niệm thật của hai đứa nhé.' },
-  { date: 'NHỮNG ĐIỀU BÌNH DỊ', title: 'Chỉ cần có em', src: 'https://images.unsplash.com/photo-1511988617509-a57c8a288659?auto=format&fit=crop&w=900&q=85', note: 'Những điều giản dị lại là điều anh trân trọng nhất.' },
-  { date: 'VẪN LÀ EM', title: 'Người anh chọn', src: 'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=900&q=85', note: 'Nếu được chọn lại, anh vẫn muốn gặp em.' },
-  { date: 'MỘT NGÀY ĐÁNG NHỚ', title: 'Khoảnh khắc của chúng mình', src: 'https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=900&q=85', note: 'Thay ảnh này bằng kỷ niệm thật của hai đứa nhé.' },
-  { date: 'NHỮNG ĐIỀU BÌNH DỊ', title: 'Chỉ cần có em', src: 'https://images.unsplash.com/photo-1511988617509-a57c8a288659?auto=format&fit=crop&w=900&q=85', note: 'Những điều giản dị lại là điều anh trân trọng nhất.' },
-  { date: 'VẪN LÀ EM', title: 'Người anh chọn', src: 'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=900&q=85', note: 'Nếu được chọn lại, anh vẫn muốn gặp em.' },
+  { date: '[03/06/2023] FIRST DATE', title: 'BUỔI HẸN HÒ CỦA ĐÔI SINH VIÊN', src: './images/memory1.jpg', note: 'Thời chúng mình vẫn còn là đôi sinh viên hẹn hò mỗi tối nà vợ iu.' },
+  { date: '[25/12/2023] NOEL TRIP', title: 'TỚI NOEL RỒI, VỢ IU OI', src: './images/memory2.jpg', note: 'Vợ iu nhớ chuyển đi này mình đi cà phê ở đâu vào dịp noel hum nà.' },
+  { date: '[13/02/2024] CAFE CHILL', title: 'MÌNH CŨNG CAFE CHILL CHILL', src: './images/memory3.jpg', note: 'Tính ra hồi đó vợ chồng mình cx chill chill vợ iu iu' },
+  { date: '[01/03/2024] MÌ CAY THOI', title: 'CAFE XONG RỒI, MÌNH ĐI ĂN MÌ CAY Y VỢ', src: './images/memory4.jpg', note: 'Lại thấy thèm mì cay rồi vợ iu oi .' },
+  { date: '[09/03/2024] ĐI XEM PHIM THOI VỢ', title: 'HEHE KHUM BÍT CÓ BỘ NÀO HAY TA', src: './images/memory5.jpg', note: 'Những điều giản dị lại là điều anh trân trọng nhất.' },
+  { date: '[17/03/2024] ĐI CHƠI TIẾP NÀ', title: 'VỢ IU ĐẸP QUÁ ĐI MẤT', src: './images/memory6.jpg', note: 'Nếu được chọn lại, anh vẫn muốn gặp em.' },
+  { date: '[27/04/2024] CHƠI MÀ LÀM SAO THÍU DALAT ĐC', title: 'DALAT ĐẸP NHƯNG KHÔNG BẰNG VỢ IU', src: './images/memory7.jpg', note: 'Vợ iu tỏa sáng như cách vợ yêu đã đến và thắp sáng cuộc sống của anh.' },    
+  { date: '[28/04/2024] NGƯỜI ĐẸP NÀO ĐÂY TA', title: 'NGƯỜI ĐẸP VẠN GIÃ NHƯNG CHỤP Ở DALAT', src: './images/memory8.jpg', note: 'Làm gì có mĩ từ nào tả được vẻ đẹp của em.' },
+  { date: '[31/10/2024] DALAT VỀ PHẢI CƯỚI THÔI', title: 'CƯỚI ĐI CHỜ CHI', src: './images/memory9.jpg', note: 'Cuối cùng anh đã rước được nàng về dinh.' },
+  { date: '[23/08/2025] TÌNH YÊU ĐÃ ĐƠM HOA KẾT TRÁI', title: 'ĐƯỢC LÀM BỐ MẸ RỒI VỢ OI', src: './images/memory10.jpg', note: 'Háo hức, lo lắng nhưng cũng rất vui mừng, thật sự đó là cảm xúc vỡ òa.' },
+  { date: '[18/02/2026] NEXT STEP', title: 'CHẶNG ĐƯỜNG SẮP TỚI', src: './images/memory11.jpg', note: 'Mình cùng nắm tay nhau đi tiếp chặng đường sắp tới nhé vợ. Mãi yêu vợ.' },
 ]
 
 function createPetalGeometry(length, width, curl = 0.2, cup = 0.18) {
@@ -433,7 +438,9 @@ export default function App() {
         <h2>Món quà này<br /><em>chỉ dành cho em.</em></h2>
         <p>Anh có một điều bí mật muốn gửi đến người con gái đặc biệt nhất của anh.</p>
         <button className="primary-button gift-button" onClick={openGift}><Gift size={17} /> {giftOpen ? 'Mở lại món quà' : 'Mở món quà bí mật'} <span>♡</span></button>
-        {giftOpen && <div className="gift-message" role="status"><div className="gift-message-icon"><Heart fill="currentColor" /></div><span className="eyebrow">MY FAVORITE PERSON</span><h3>Chúc mừng 20/10, {WIFE_NAME}!</h3><p>Chúc em luôn xinh đẹp theo cách của riêng mình, luôn có thật nhiều niềm vui và luôn cảm nhận được rằng em được yêu thương. Cảm ơn em đã là một phần tuyệt đẹp trong cuộc đời anh.</p><strong>Anh yêu em nhiều hơn những vì sao có thể đếm. ❤️</strong></div>}
+        {giftOpen && <div className="gift-message" role="status"><div className="gift-message-icon"><Heart fill="currentColor" /></div><span className="eyebrow">MY FAVORITE PERSON</span><h3>Chúc mừng 20/10, {WIFE_NAME}!</h3><p>Chúc em luôn xinh đẹp theo cách của riêng mình, luôn có thật nhiều niềm vui và luôn cảm nhận được rằng em được yêu thương. Cảm ơn em đã là một phần tuyệt đẹp trong cuộc đời anh.</p><strong>Anh yêu em nhiều hơn những vì sao có thể đếm. ❤️</strong>
+        <strong>Vợ đừng quên còn một món quà lấp lánh vào kỷ niệm ngày cưới nữa nhé vợ iu. ❤️</strong>
+        </div>}
       </section>
 
       <footer className="footer"><div className="footer-heart"><Heart fill="currentColor" size={15} /></div><p>Made for one girl, in a universe of billions.</p><span>20 · 10 <i>—</i> FOREVER YOURS</span><a href="#home" className="back-top">Về đầu trang ↑</a></footer>
